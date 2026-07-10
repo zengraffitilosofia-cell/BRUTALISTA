@@ -1,0 +1,26 @@
+/* ===== decorative background layer — imagen real del usuario, apaisada
+   con background-size:cover (sin recortar/reescribir el archivo original).
+   Excluida del modal de detalle de forma estructural: el modal tiene su
+   propio fondo opaco y un z-index muy por encima de esta capa. ===== */
+.bg-decor {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: .3;
+  background-image: url("../assets/img/fondo-brutalista.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  /* Pequeño paneo continuo para que siga siendo un fondo "animado", no una
+     foto fija — recorre solo una franja central para no revelar bordes. */
+  animation: bgPan 70s ease-in-out infinite alternate;
+}
+
+@keyframes bgPan {
+  from { background-position: 35% 25%; }
+  to { background-position: 65% 75%; }
+}
+
+img{height:auto}
+.lazy-section{content-visibility:auto;contain-intrinsic-size:1000px;}

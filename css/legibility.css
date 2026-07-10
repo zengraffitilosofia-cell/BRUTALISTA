@@ -1,0 +1,16 @@
+/* ===== backing plate: guarantees text/decor contrast at rest, not only on hover ===== */
+.text-plate {
+  position: relative;
+  background: rgba(0, 0, 0, .72);
+  transition: background-color .25s ease, backdrop-filter .25s ease;
+}
+
+@media (hover: hover) {
+  .text-plate:hover {
+    background: rgba(0, 0, 0, .85);
+    backdrop-filter: blur(2px);
+  }
+}
+
+img{height:auto}
+.lazy-section{content-visibility:auto;contain-intrinsic-size:1000px;}

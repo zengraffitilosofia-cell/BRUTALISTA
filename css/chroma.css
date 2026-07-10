@@ -1,0 +1,65 @@
+/* ===== shared treatment for the 3 large headlines (hero / gallery / contact) ===== */
+.chroma-title {
+  font-family: "ErfTarsExtraBlack", "Archivo Black", Arial, sans-serif;
+  /* ErfTarsExtraBlack tiene métricas más condensadas que Archivo Black:
+     letter-spacing explícito para que no se vea pegado al partir en spans. */
+  letter-spacing: 0.02em;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  /* Caja naranja alrededor del titular. En em: escala con el font-size
+     propio de cada titular (clamp()), así el padding nunca deja de separar
+     el borde de las letras/descendentes en ningún breakpoint. */
+  display: inline-block;
+  border: 4px solid var(--accent-orange);
+  padding: 0.2em 0.45em;
+  box-sizing: border-box;
+  /* Mismo barrido que las letras (misma --sweep/--title-width, mismo
+     timing), pero con los colores invertidos: negro donde la letra está
+     blanca, naranja donde la letra está negra. Así la letra que "desaparece"
+     en su fase negra queda en negro sobre naranja, nunca negro sobre negro. */
+  background-image: linear-gradient(90deg, #000 0%, #000 50%, var(--accent-orange) 50%, var(--accent-orange) 100%);
+  background-repeat: repeat-x;
+  background-size: var(--title-width, 100%) 100%;
+  background-position-x: var(--sweep, 0px);
+  animation: titleSweep 3.5s ease-in-out infinite alternate;
+}
+
+/* Necesaria para que --sweep interpole con suavidad en el @keyframes de
+   abajo — sin esto un custom property no anima, salta de golpe. */
+@property --sweep {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+
+/* Recorre UN periodo completo del patrón (repeat-x, ancho = todo el
+   titular): en los extremos el corte queda fuera de la ventana visible,
+   así que se ve sólido blanco / sólido negro de lado a lado — no solo un
+   bamboleo cerca del centro — y al ser periódico, en bucle sin saltos. */
+@keyframes titleSweep {
+  from { --sweep: 0px; }
+  to { --sweep: var(--title-width, 0px); }
+}
+
+.chroma-letter {
+  display: inline-block;
+  position: relative;
+  transition: transform .12s ease-out, color .12s;
+  /* Oscilación blanco/negro con corte duro (sin degradado): las dos paradas
+     de color coinciden en el mismo 50%, no hay mezcla entre ambos tonos.
+     --letter-offset (letter-hover.js) alinea el corte para que se vea
+     continuo a lo largo de TODO el titular, no repetido letra por letra;
+     --sweep anima ESE mismo patrón de lado a lado, en bucle, sincronizado
+     entre todas las letras (mismo timing, sin desfase por letra). */
+  background-image: linear-gradient(90deg, #fff 0%, #fff 50%, #000 50%, #000 100%);
+  background-repeat: repeat-x;
+  background-position-x: calc(var(--letter-offset, 0px) + var(--sweep));
+  background-position-y: 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: titleSweep 3.5s ease-in-out infinite alternate;
+}
+
+img{height:auto}
+.lazy-section{content-visibility:auto;contain-intrinsic-size:1000px;}

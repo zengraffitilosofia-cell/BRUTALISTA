@@ -1,0 +1,329 @@
+/* ===== gallery card ===== */
+.project-card {
+  position: relative;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+  cursor: pointer;
+  border-width: 4px;
+  border-style: solid;
+  border-color: var(--fg);
+  padding: 14px;
+}
+
+.project-card__plus {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 34px;
+  height: 34px;
+  background: var(--accent-gold);
+  color: #000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 22px;
+  z-index: 2;
+}
+
+.project-card__plus--visible {
+  display: flex;
+}
+
+.project-card__image {
+  /* La celda (tamaño real) la fija el mosaico bento (project-card--large/
+     --tall/--wide, ver más abajo); esta caja solo llena esa celda. */
+  flex: 1;
+  overflow: hidden;
+  border: 2px dashed rgba(255, 255, 255, .35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .2s;
+}
+
+.project-card__image-img {
+  width: 100%;
+  height: 100%;
+  /* cover (no contain): llena la celda entera sin bandas negras a los
+     lados — recorta el sobrante en vez de dejar hueco. En un mosaico bento
+     con celdas de proporción fija, priorizar que la foto se vea grande e
+     impactante importa más que evitar cualquier recorte. */
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* ===== mosaico bento (03 / GALERÍA) =====
+   Grid base de 4 columnas × filas fijas; cada tarjeta ocupa 1, 2 o 4
+   celdas según su contenido — no todas del mismo tamaño. */
+.project-card--large {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.project-card--tall {
+  grid-row: span 2;
+}
+
+.project-card--wide {
+  grid-column: span 2;
+}
+
+.project-card__title {
+  margin-top: 12px;
+  font-family: var(--font-display);
+  font-size: clamp(14px, 1.7vw, 23px);
+  line-height: 1.05;
+  text-align: left;
+  transition: color .15s, transform .15s;
+  color: var(--fg);
+}
+
+/* ===== project detail modal ===== */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 250;
+  background: var(--bg);
+  overflow-y: auto;
+  transition: opacity .35s ease, visibility .35s;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.modal--open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.modal__close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 6;
+  width: 44px;
+  height: 44px;
+  background: var(--bg);
+  color: var(--fg);
+  border: 4px solid var(--fg);
+  font-family: var(--font-mono);
+  font-size: 18px;
+}
+
+.modal__close:hover {
+  border-color: var(--accent-gold);
+  color: var(--accent-gold);
+}
+
+.modal__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 6;
+  width: 56px;
+  height: 80px;
+  background: var(--bg);
+  color: var(--fg);
+  border: 4px solid var(--fg);
+  font-family: var(--font-display);
+  font-size: 28px;
+}
+
+.modal__nav:hover {
+  border-color: var(--accent-orange);
+  color: var(--accent-orange);
+}
+
+.modal__nav--prev { left: 16px; }
+.modal__nav--next { right: 16px; }
+
+.modal__body {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 110px 90px 80px;
+}
+
+.modal__title {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 7vw, 96px);
+  line-height: 0.9;
+  margin: 0 0 40px;
+  text-shadow: 5px 0 var(--accent-orange), -5px 0 var(--accent-navy);
+}
+
+.modal__slider-frame {
+  position: relative;
+  overflow: hidden;
+  border: 4px solid var(--fg);
+  height: 340px;
+}
+
+.modal__slider-track {
+  display: flex;
+  /* width real y % por slide los fija project-modal.js según el nº de
+     imágenes de cada proyecto (2, 3 o 4) — esto es solo un valor de reserva. */
+  width: 300%;
+  height: 100%;
+  transition: transform .5s cubic-bezier(.7,0,.3,1);
+}
+
+.modal__slide {
+  width: 33.333%;
+  height: 100%;
+  flex-shrink: 0;
+  border-right: 4px solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.modal__slide-img {
+  width: 100%;
+  height: 100%;
+  /* cover: igual que en la tarjeta, sin bandas negras a los lados. */
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.modal__dots {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.modal__dot {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.modal__meta {
+  margin-top: 56px;
+  border-top: 4px solid var(--fg);
+  padding-top: 30px;
+}
+
+.modal__description {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--fg);
+  margin: 0 0 26px;
+  max-width: 640px;
+}
+
+.modal__specs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal__spec {
+  display: flex;
+  gap: 14px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+.modal__spec-label {
+  color: var(--white-50);
+  width: 140px;
+  flex-shrink: 0;
+}
+
+.modal__spec-value {
+  font-weight: 700;
+}
+
+/* ===== contact cards ===== */
+.contact-card {
+  flex: 1;
+  min-width: 240px;
+  padding: 26px 22px;
+}
+
+.contact-card--phone { border: 4px solid var(--accent-navy); }
+.contact-card--email { border: 4px solid var(--accent-orange); }
+.contact-card--whatsapp {
+  border-width: 6px;
+  border-style: solid;
+  border-color: var(--accent-gold);
+  transition: border-width .15s;
+}
+.contact-card--whatsapp:hover { border-width: 8px; }
+
+.contact-card__label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: var(--white-55);
+  margin-bottom: 10px;
+}
+
+.contact-card__value {
+  font-family: var(--font-display);
+  font-size: clamp(18px, 2vw, 26px);
+}
+
+.contact-card--email .contact-card__value {
+  font-size: clamp(16px, 1.6vw, 22px);
+}
+
+.contact-card--whatsapp .contact-card__value {
+  animation: rgbSplitYellow .6s steps(2) infinite;
+}
+
+/* ===== contact form ===== */
+.contact-form {
+  margin-top: 60px;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.contact-form__field {
+  background: var(--bg);
+  color: var(--fg);
+  border: 1px solid var(--fg);
+  padding: 14px 16px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+
+.contact-form__field:focus {
+  outline: none;
+  border-color: var(--accent-gold);
+}
+
+textarea.contact-form__field {
+  resize: vertical;
+}
+
+.contact-form__submit {
+  align-self: flex-start;
+  background: var(--bg);
+  color: var(--fg);
+  border: 4px solid var(--accent-orange);
+  padding: 12px 26px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 2px;
+}
+
+.contact-form__submit:hover {
+  border-color: var(--accent-gold);
+  color: var(--accent-gold);
+}
+
+img{height:auto}
+.lazy-section{content-visibility:auto;contain-intrinsic-size:1000px;}

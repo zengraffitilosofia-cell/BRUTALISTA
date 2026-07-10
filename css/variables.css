@@ -1,0 +1,34 @@
+@font-face {
+  font-family: "ErfTarsExtraBlack";
+  src: url("../assets/fonts/ErfTarsExtraBlack-m2DG2.otf") format("opentype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* colors */
+  --bg: #000000;
+  --fg: #ffffff;
+  --accent-orange: #FF6A00;
+  --accent-gold: #FFD700;
+  --accent-navy: #0A1C2E;
+
+  --white-40: rgba(255, 255, 255, .4);
+  --white-50: rgba(255, 255, 255, .5);
+  --white-55: rgba(255, 255, 255, .55);
+  --white-60: rgba(255, 255, 255, .6);
+  --white-70: rgba(255, 255, 255, .7);
+  --white-85: rgba(255, 255, 255, .85);
+
+  /* fonts */
+  --font-display: 'Archivo Black', Arial, sans-serif;
+  --font-mono: 'Space Mono', monospace;
+  --font-body: 'Inter', Helvetica, Arial, sans-serif;
+
+  /* spacing */
+  --section-pad-x: 5vw;
+}
+
+img{height:auto}
+.lazy-section{content-visibility:auto;contain-intrinsic-size:1000px;}
